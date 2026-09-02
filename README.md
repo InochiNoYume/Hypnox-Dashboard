@@ -73,16 +73,21 @@ npm start
 
 Copia `.env.example` a `.env.local` cuando llegue la etapa de conexión. **No subas `.env.local` ni secretos a GitHub.**
 
-Las credenciales de Supabase, Discord OAuth2 y Vercel se configurarán después de terminar la implementación del repositorio.
+Variables actualmente esperadas:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+- `NEXT_PUBLIC_APP_URL`
+
+Discord OAuth se configura en Supabase Auth Providers y callback URL, sin exponer secretos en el cliente.
 
 ## Integraciones pendientes
 
-1. Supabase Auth y Database.
-2. Discord OAuth2.
-3. Autorización por roles/servidores.
-4. Consultas y mutaciones reales contra las tablas de Hypnox Bot.
-5. Conexión del proyecto con Vercel.
-6. Dominio y variables de producción.
+1. Cargar credenciales reales de Supabase en entorno local/producción.
+2. Configurar Discord OAuth en Supabase (Client ID/Secret + redirect URL final).
+3. Consultas y mutaciones reales contra las tablas de Hypnox Bot.
+4. Conexión del proyecto con Vercel.
+5. Dominio y variables de producción.
 
 ## API
 

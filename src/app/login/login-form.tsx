@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { createSupabaseBrowserClient } from '@/lib/supabase/client';
 
-export function LoginForm() {
+export function LoginForm({ nextPath }: { nextPath: string }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -11,10 +11,11 @@ export function LoginForm() {
     setLoading(true);
     setMessage('');
     const supabase = createSupabaseBrowserClient();
-    const redirectTo = `${window.location.origin}/auth/callback`;
+    const callbackUrl = new URL('/auth/callback', window.location.origin);
+    callbackUrl.searchParams.set('next', nextPath);
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'discord',
-      options: { redirectTo },
+      options: { redirectTo: callbackUrl.toString() },
     });
     if (error) {
       setMessage('El acceso todavía no está configurado. La conexión se habilitará en la etapa final.');
