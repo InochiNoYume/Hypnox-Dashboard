@@ -12,7 +12,7 @@ export async function updateSession(request: NextRequest) {
     cookies: {
       getAll() { return request.cookies.getAll(); },
       setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+        cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value, options));
         response = NextResponse.next({ request });
         cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
       },
@@ -25,7 +25,8 @@ export async function updateSession(request: NextRequest) {
   if (!user && pathname !== '/login' && !pathname.startsWith('/auth') && pathname !== '/api/health') {
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = '/login';
-    loginUrl.searchParams.set('next', pathname);
+    loginUrl.search = '';
+    loginUrl.searchParams.set('next', `${pathname}${request.nextUrl.search}`);
     return NextResponse.redirect(loginUrl);
   }
 
